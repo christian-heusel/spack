@@ -6,7 +6,7 @@
 from spack import *
 
 
-class MetaHipMer(CMakePackage):
+class MetaHipMer2(CMakePackage):
     """
     MetaHipMer (MHM) is a de novo metagenome short-read assembler. This is
     version 2 (MHM2), which is written entirely in UPC++ and runs efficiently
