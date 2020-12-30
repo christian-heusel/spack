@@ -23,24 +23,27 @@
 from spack import *
 
 
-class MetaHipMer(Package):
+class MetaHipMer(CMakePackage):
     """FIXME: Put a proper description of your package here."""
 
-    # FIXME: Add a proper url for your package's homepage here.
-    homepage = "https://www.example.com"
-    url      = "meta-hip-mer"
+    homepage = "https://bitbucket.org/berkeleylab/mhm2/src/e674623ebeb52bb0b0e8dbb979ba51aef0ddaa93/docs/mhm_guide.md"
+    url = "https://bitbucket.org/berkeleylab/mhm2/downloads/mhm2-2.0.0.tar.gz"
 
-    # FIXME: Add a list of GitHub accounts to
-    # notify when the package is updated.
-    # maintainers = ['github_user1', 'github_user2']
+    maintainers = ['christian-heusel', 'DieGoldeneEnte']
 
-    # FIXME: Add proper versions and checksums here.
-    # version('1.2.3', '0123456789abcdef0123456789abcdef')
+    version(
+        '2.0.0',
+        'd0603a916a25069bb4171fbe8723f78bb9024d9f4a296d8025902e88ad2a14a0')
 
-    # FIXME: Add dependencies if required.
-    # depends_on('foo')
+    depends_on('upcxx')
+
+    def cmake_args(self):
+        args = []
+
+        build = Executable("./build.sh")
+        build("Release")
+        return args
 
     def install(self, spec, prefix):
-        # FIXME: Unknown build system
         make()
         make('install')
