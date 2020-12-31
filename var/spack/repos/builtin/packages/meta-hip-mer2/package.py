@@ -28,8 +28,13 @@ class MetaHipMer2(CMakePackage):
             description='The build type to build',
             values=('Debug', 'Release', 'DebugRelease'))
 
-    depends_on('upcxx')
+    variant('mpi', default=True,
+            description='Enables MPI')
+
+    depends_on('upcxx+mpi', when='+mpi')
+    depends_on('upcxx~mpi', when='~mpi')
     depends_on('zlib')
+    depends_on('mpi', when='+mpi')
 
     # TODO fix upstream
     def patch(self):
@@ -53,9 +58,10 @@ class MetaHipMer2(CMakePackage):
         # is different from CMAKE_CXX_COMPILER:
         #   $SPACK_ROOT/spack/lib/spack/env/gcc/g++ ->
         #   $SPACK_ROOT/spack/lib/spack/env/cc
+        upcxx_meta = Executable("upcxx-meta")
         args = [
             self.define("CMAKE_CXX_COMPILER",
-                        self.compiler.cxx)
+                        upcxx_meta("CXX", output=str).strip())
         ]
 
         return args
