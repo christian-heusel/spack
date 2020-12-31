@@ -23,15 +23,30 @@ class MetaHipMer2(CMakePackage):
         '2.0.0',
         'd0603a916a25069bb4171fbe8723f78bb9024d9f4a296d8025902e88ad2a14a0')
 
+    variant('build_type',
+            default='Release',
+            description='The build type to build',
+            values=('Debug', 'Release', 'DebugRelease'))
+
     depends_on('upcxx')
 
+    def setup_build_environment(self, env):
+        # TODO: Make this configurable via variant
+        env.set('UPCXX_CODEMODE', "O3")
+        env.set('UPCXX_THREADMODE', "par")
+
     def cmake_args(self):
-        args = []
-
-        build = Executable("./build.sh")
-        build("Release")
+        # This seems to be necessary since the cmake file is not happy with
+        # spacks env system:
+        #
+        # UPCXX compiler provided by upcxx-meta CXX:
+        #   /usr/bin/g++ ->
+        #   /usr/bin/x86_64-linux-gnu-g++-10
+        # is different from CMAKE_CXX_COMPILER:
+        #   $SPACK_ROOT/spack/lib/spack/env/gcc/g++ ->
+        #   $SPACK_ROOT/spack/lib/spack/env/cc
+        args = [
+            self.define("CMAKE_CXX_COMPILER",
+                        self.compiler.cxx)
+        ]
         return args
-
-    def install(self, spec, prefix):
-        make()
-        make('install')
