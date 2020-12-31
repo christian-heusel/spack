@@ -29,6 +29,14 @@ class MetaHipMer2(CMakePackage):
             values=('Debug', 'Release', 'DebugRelease'))
 
     depends_on('upcxx')
+    depends_on('zlib')
+
+    # TODO fix upstream
+    def patch(self):
+        filter_file(
+                'ZLIB_INCLUDE_DIRECTORIES',
+                'ZLIB_INCLUDE_DIRS',
+                'CMakeLists.txt')
 
     def setup_build_environment(self, env):
         # TODO: Make this configurable via variant
@@ -49,4 +57,5 @@ class MetaHipMer2(CMakePackage):
             self.define("CMAKE_CXX_COMPILER",
                         self.compiler.cxx)
         ]
+
         return args
