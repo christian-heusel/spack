@@ -16,20 +16,21 @@ class MetaHipMer2(CMakePackage):
 
     homepage = "https://bitbucket.org/berkeleylab/mhm2/src/e674623ebeb52bb0b0e8dbb979ba51aef0ddaa93/docs/mhm_guide.md"
     url = "https://bitbucket.org/berkeleylab/mhm2/downloads/mhm2-2.0.0.tar.gz"
+    git = "https://bitbucket.org/berkeleylab/mhm2.git"
 
     maintainers = ['christian-heusel', 'DieGoldeneEnte']
 
     version(
         '2.0.0',
         'd0603a916a25069bb4171fbe8723f78bb9024d9f4a296d8025902e88ad2a14a0')
+    version('master', branch="master", submodules=True)
 
     variant('build_type',
             default='Release',
             description='The build type to build',
             values=('Debug', 'Release', 'DebugRelease'))
 
-    variant('mpi', default=True,
-            description='Enables MPI')
+    variant('mpi', default=True, description='Enables MPI')
 
     depends_on('upcxx+mpi', when='+mpi')
     depends_on('upcxx~mpi', when='~mpi')
@@ -38,10 +39,8 @@ class MetaHipMer2(CMakePackage):
 
     # TODO fix upstream
     def patch(self):
-        filter_file(
-                'ZLIB_INCLUDE_DIRECTORIES',
-                'ZLIB_INCLUDE_DIRS',
-                'CMakeLists.txt')
+        filter_file('ZLIB_INCLUDE_DIRECTORIES', 'ZLIB_INCLUDE_DIRS',
+                    'CMakeLists.txt')
 
     def setup_build_environment(self, env):
         # TODO: Make this configurable via variant
