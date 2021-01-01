@@ -65,9 +65,14 @@ class Lammps(CMakePackage, CudaPackage):
                           'srd', 'user-atc', 'user-h5md', 'user-lb',
                           'user-meamc', 'user-misc', 'user-netcdf', 'user-omp',
                           'user-reaxc', 'voronoi']
+    scc_packages_on = [
+        "manybody", "molecule", "replica", "kspace", "asphere", "rigid",
+        "snap", "user-omp", "user-reaxc", "user-omp"
+    ]
 
     for pkg in supported_packages:
-        variant(pkg, default=False,
+        default = False if not pkg in scc_packages_on else True
+        variant(pkg, default=default,
                 description='Activate the {0} package'.format(pkg))
     variant('lib', default=True,
             description='Build the liblammps in addition to the executable')
