@@ -156,6 +156,9 @@ class Wrf(Package):
     depends_on("libtool", type="build")
     phases = ["configure", "build", "install"]
 
+    def setup_run_environment(self, env):
+        env.prepend_path("PATH", join_path(self.prefix, "main"))
+
     def setup_build_environment(self, env):
         env.set("NETCDF", self.spec["netcdf-c"].prefix)
         if "+pnetcdf" in self.spec:
