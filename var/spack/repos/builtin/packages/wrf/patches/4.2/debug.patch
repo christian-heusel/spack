@@ -1,0 +1,23 @@
+diff --git a/external/RSL_LITE/rsl_bcast.c b/external/RSL_LITE/rsl_bcast.c
+index 55b8acc6..b22ab05c 100755
+--- a/external/RSL_LITE/rsl_bcast.c
++++ b/external/RSL_LITE/rsl_bcast.c
+@@ -212,7 +212,8 @@ void RSL_LITE_TO_CHILD_INFO ( msize_p,                        /* number of tasks
+     offset = *offset_p ;
+     alltasks = MAX( s_ntasks_nest_x*s_ntasks_nest_y + offset, s_ntasks_par_x*s_ntasks_par_y ) ;
+ 
+-#if 0
++//#if 0
++fprintf(stderr,"message size %d\n",msize_p)  ;
+ fprintf(stderr,"s_ntasks_par_x %d\n",s_ntasks_par_x)  ;
+ fprintf(stderr,"s_ntasks_par_y %d\n",s_ntasks_par_y)  ;
+ fprintf(stderr,"s_ntasks_nest_x %d\n",s_ntasks_nest_x)  ;
+@@ -220,7 +221,7 @@ fprintf(stderr,"s_ntasks_nest_y %d\n",s_ntasks_nest_y)  ;
+ fprintf(stderr,"%s %d offset %d\n",__FILE__,__LINE__,offset)  ;
+ fprintf(stderr,"%s %d alltasks %d\n",__FILE__,__LINE__,alltasks)  ;
+ fprintf(stderr,"%s %d a %d b %d\n",__FILE__,__LINE__,s_ntasks_nest_x*s_ntasks_nest_y+offset,s_ntasks_par_x*s_ntasks_par_y)  ;
+-#endif
++//#endif
+ 
+     /* construct Plist */
+     Sendbufsize = 0 ;

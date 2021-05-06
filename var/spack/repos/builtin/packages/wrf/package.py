@@ -102,6 +102,11 @@ class Wrf(Package):
         default=True,
         description="Parallel IO support through Pnetcdf library",
     )
+    variant(
+        "debug",
+        default=False,
+        description="debug stuff don't use!",
+    )
 
     patch("patches/3.9/netcdf_backport.patch", when="@3.9.1.1")
     patch("patches/3.9/tirpc_detect.patch", when="@3.9.1.1")
@@ -130,6 +135,7 @@ class Wrf(Package):
     patch("patches/4.2/Makefile.patch", when="@4.2")
     patch("patches/4.2/tirpc_detect.patch", when="@4.2")
     patch("patches/4.2/add_aarch64.patch", when="@4.2")
+    patch("patches/4.2/debug.patch", when="+debug")
 
     depends_on("pkgconfig", type=("build"))
     depends_on("libtirpc")
