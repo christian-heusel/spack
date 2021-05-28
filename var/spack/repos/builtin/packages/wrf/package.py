@@ -8,7 +8,7 @@ from spack import *
 from sys import stdout
 import glob
 from os import O_NONBLOCK, rename
-from os.path import basename
+from os.path import basename, dirname
 from fcntl import fcntl, F_GETFL, F_SETFL
 from subprocess import Popen, PIPE
 import time
@@ -181,6 +181,9 @@ class Wrf(Package):
         filter_file("^#!/bin/csh -f", "#!/usr/bin/env csh", *files)
         filter_file("^#!/bin/csh", "#!/usr/bin/env csh", *files)
 
+        cpp_path = dirname(self.compiler.cc)
+        filter_file("^CPP             =      /lib/cpp", "CPP             =      cpp".format(cpp_path), "arch/configure.defaults")
+
     def answer_configure_question(self, outputbuf):
 
         # Platform options question:
@@ -310,6 +313,8 @@ class Wrf(Package):
 
         if "Executables successfully built" in result_buf:
             return True
+
+        print(result_buf)
 
         return False
 
