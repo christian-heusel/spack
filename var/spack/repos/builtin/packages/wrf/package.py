@@ -182,7 +182,7 @@ class Wrf(Package):
         filter_file("^#!/bin/csh", "#!/usr/bin/env csh", *files)
 
         cpp_path = dirname(self.compiler.cc)
-        filter_file("^CPP             =      /lib/cpp", "CPP             =      {}/cpp".format(cpp_path), "arch/configure.defaults")
+        filter_file("^CPP             =      /lib/cpp", "CPP             =      cpp".format(cpp_path), "arch/configure.defaults")
 
     def answer_configure_question(self, outputbuf):
 
