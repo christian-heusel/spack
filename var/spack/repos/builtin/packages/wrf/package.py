@@ -268,9 +268,9 @@ class Wrf(Package):
                 if p.poll() is not None:
                     returncode = p.returncode
                     break
-                if stallcounter > 300:
+                if stallcounter > 6000:
                     raise InstallError(
-                        "Output stalled for 30s, presumably an "
+                        "Output stalled for 600s, presumably an "
                         "undetected question."
                     )
                 time.sleep(0.1)  # Try to do a bit of rate limiting
